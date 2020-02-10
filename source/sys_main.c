@@ -107,6 +107,7 @@ int main(void)
 
 
     while(1){
+        /*Tengo hambre*/
         /* El RTOS nunca debe llegar a esta linea */
     }
 /* USER CODE END */
