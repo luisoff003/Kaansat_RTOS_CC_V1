@@ -72,6 +72,19 @@
 /* USER CODE BEGIN (1) */
 
 /* Preprocessor variables */
+
+/* Prioridad de Tareas */
+#define     ENVIO_PRIOR         4       /*T1*/
+#define     SENSORES_PRIOR      1       /*T2*/
+#define     LIBERAR_PRIOR       3       /*T3*/
+#define     BUZZER_PRIOR        3       /*T5*/
+
+/* Periodo Tarea periodica ENVIO ms */
+#define     T1              1000            /* Best fit 100/ 100Hz tick */
+
+/* Periodo de envio de datos segundos */
+#define     T               T1/1000.0
+
 #define G_gravity   9.80665 /*[m/s^2]   Cte gravitacional */
 
 
@@ -94,8 +107,7 @@ int main(void)
 
 
     while(1){
-        /* Nunca llega a esta linea */
-        ;;;;
+        /* El RTOS nunca debe llegar a esta linea */
     }
 /* USER CODE END */
 
