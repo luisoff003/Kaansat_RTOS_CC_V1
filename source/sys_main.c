@@ -43,6 +43,26 @@
 
 
 /* USER CODE BEGIN (0) */
+
+/* Librerias Estandar */
+#include <math.h>
+
+/* Librerias perifericos */
+#include "sci.h"
+#include "gio.h"
+#include "adc.h"
+#include "het.h"
+#include "spi.h"
+
+/* Librerias RTOS */
+#include "FreeRTOS.h"
+#include "os_task.h"
+#include "os_semphr.h"
+#include "os_queue.h"
+
+/* Otras librerias */
+
+
 /* USER CODE END */
 
 /* Include Files */
@@ -50,6 +70,11 @@
 #include "sys_common.h"
 
 /* USER CODE BEGIN (1) */
+
+/* Preprocessor variables */
+#define G_gravity   9.80665 /*[m/s^2]   Cte gravitacional */
+
+
 /* USER CODE END */
 
 /** @fn void main(void)
@@ -66,6 +91,12 @@
 int main(void)
 {
 /* USER CODE BEGIN (3) */
+
+
+    while(1){
+        /* Nunca llega a esta linea */
+        ;;;;
+    }
 /* USER CODE END */
 
     return 0;

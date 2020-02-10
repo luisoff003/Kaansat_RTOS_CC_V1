@@ -35,7 +35,7 @@
         <PATH>include\htu.h</PATH>
       </HDRHTU>
       <SRCHET>
-        <PATH/>
+        <PATH>source\het.c</PATH>
       </SRCHET>
     </FILENAMES>
   </HET>
@@ -267,7 +267,9 @@
       <HDRGIO>
         <NAME>gio.h</NAME>
       </HDRGIO>
-      <SRCGIO/>
+      <SRCGIO>
+        <NAME>gio.c</NAME>
+      </SRCGIO>
       <HDRLIN_R>
         <NAME>reg_lin.h</NAME>
       </HDRLIN_R>
@@ -295,7 +297,9 @@
       <HDRSPI>
         <NAME>spi.h</NAME>
       </HDRSPI>
-      <SRCSPI/>
+      <SRCSPI>
+        <NAME>spi.c</NAME>
+      </SRCSPI>
       <HDRCAN_R>
         <NAME>reg_can.h</NAME>
       </HDRCAN_R>
@@ -309,7 +313,9 @@
       <HDRADC>
         <NAME>adc.h</NAME>
       </HDRADC>
-      <SRCADC/>
+      <SRCADC>
+        <NAME>adc.c</NAME>
+      </SRCADC>
       <HET1ASMHDR>
         <NAME/>
       </HET1ASMHDR>
@@ -331,7 +337,9 @@
       <HDRHTU>
         <NAME>htu.h</NAME>
       </HDRHTU>
-      <SRCHET/>
+      <SRCHET>
+        <NAME>het.c</NAME>
+      </SRCHET>
       <HDRESM_R>
         <NAME>reg_esm.h</NAME>
       </HDRESM_R>
@@ -502,7 +510,7 @@
         <PATH>include\gio.h</PATH>
       </HDRGIO>
       <SRCGIO>
-        <PATH/>
+        <PATH>source\gio.c</PATH>
       </SRCGIO>
     </FILENAMES>
   </GIO>
@@ -554,7 +562,7 @@
         <PATH>include\spi.h</PATH>
       </HDRSPI>
       <SRCSPI>
-        <PATH/>
+        <PATH>source\spi.c</PATH>
       </SRCSPI>
     </FILENAMES>
   </SPI>
@@ -580,7 +588,7 @@
         <PATH>include\adc.h</PATH>
       </HDRADC>
       <SRCADC>
-        <PATH/>
+        <PATH>source\adc.c</PATH>
       </SRCADC>
     </FILENAMES>
   </ADC>
