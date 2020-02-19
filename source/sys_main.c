@@ -78,9 +78,11 @@
 #define     SENSORES_PRIOR      1       /*T2*/
 #define     LIBERAR_PRIOR       3       /*T3*/
 #define     BUZZER_PRIOR        3       /*T5*/
+#define     PATH_PLANNER        2
+#define     AUTOPILOT           4
 
 /* Periodo Tarea periodica ENVIO ms */
-#define     T1              1000            /* Best fit 100/ 100Hz tick */
+#define     TS              1000            /* Best fit 100/ 100Hz tick */
 
 /* Periodo de envio de datos segundos */
 #define     T               T1/1000.0
