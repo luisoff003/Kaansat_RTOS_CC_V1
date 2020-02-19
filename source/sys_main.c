@@ -44,24 +44,27 @@
 
 /* USER CODE BEGIN (0) */
 
-/* Librerias Estandar */
+/* Standar Libraries */
 #include <math.h>
 
-/* Librerias perifericos */
+/* Peripheral Libraries  */
 #include "sci.h"
 #include "gio.h"
 #include "adc.h"
 #include "het.h"
 #include "spi.h"
 
-/* Librerias RTOS */
+/* RTOS Libraries */
 #include "FreeRTOS.h"
 #include "os_task.h"
 #include "os_semphr.h"
 #include "os_queue.h"
 
-/* Otras librerias */
-
+/* Other Libraries */
+#include "custom/Utilities.h"   /* Library with important declarations */
+#include "Custom/Servomotor.h"  /* Servomotor */
+#include "custom/GPS.h"         /* Libreria GPS */
+#include "Custom/LSM303D.h"     /* Libreria Acelerometro/Termometro/Magnetometro */
 
 /* USER CODE END */
 
@@ -74,12 +77,13 @@
 /* Preprocessor variables */
 
 /* Prioridad de Tareas */
-#define     ENVIO_PRIOR         4       /*T1*/
-#define     SENSORES_PRIOR      1       /*T2*/
-#define     LIBERAR_PRIOR       3       /*T3*/
-#define     BUZZER_PRIOR        3       /*T5*/
-#define     PATH_PLANNER        2
-#define     AUTOPILOT           4
+#define     WAIT_GCS_PRIOR      4       /*  1  */
+#define     DAT_REC_PRIOR       3       /*  2  */
+#define     SENSOR_PRIOR        1       /*  3  */
+#define     TELEMETR_PRIOR      3       /*  4  */
+#define     AUTOPILO_PRIOR      4       /*  5  */
+#define     MISSION_PRIOR       3       /*  6  */
+#define     BUZZER_PRIOR        3       /*  7  */
 
 /* Periodo Tarea periodica ENVIO ms */
 #define     TS              1000            /* Best fit 100/ 100Hz tick */
@@ -101,16 +105,27 @@
 */
 
 /* USER CODE BEGIN (2) */
+
+/*--------------------------------
+ *          RTOS Tasks
+ *--------------------------------*/
+void vApplicationIdleHook(void);    /*< Funcion de servicio de Inactividad */
+uint8_t CreateUserTasks(void);      /*< Crear tareas del usuario */
+
 /* USER CODE END */
 
 int main(void)
 {
 /* USER CODE BEGIN (3) */
 
+    /* Await further character */
+    //sciReceive(scilinREG, 1, ( unsigned char *)receivedData);
+
+    CreateUserTasks();
+    vTaskStartScheduler();    /*< Start scheduler */
 
     while(1){
-        /*Tengo hambre, yo no  tengo hambre jejeje*/
-        /* El RTOS nunca debe llegar a esta linea */
+        /*< RTOS shall not get in this line */
     }
 /* USER CODE END */
 
@@ -119,4 +134,7 @@ int main(void)
 
 
 /* USER CODE BEGIN (4) */
+uint8_t CreateUserTasks(void){
+
+}
 /* USER CODE END */

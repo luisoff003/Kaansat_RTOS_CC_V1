@@ -21,8 +21,6 @@
 #include "os_queue.h"
 
 #define AD_VOLT_BAT     0           /*< ADIN0 de la tarjeta */
-#define AD_MQ7          1           /*< ADIN1 de la tarjeta */
-#define AD_MQ135        2           /*< ADIN2 de la tarjeta */
 
 /* --------------------------------
  *  VARIABLES IMPORTANTES GLOBALES
