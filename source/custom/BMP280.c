@@ -34,7 +34,7 @@
 #include <stdint.h>
 
 #include "spi.h"
-#include "custom/utilidades.h"
+#include "custom/Utilities.h"
 #include "custom/BMP280.h"
 
 /*

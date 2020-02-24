@@ -43,6 +43,22 @@
 
 
 /* USER CODE BEGIN (0) */
+/*
+ * KAAN SAT TEAM PROPRIETARY INFORMATION - kaansat@soyunaq.mx
+ *
+ * Property of KA'AN SAT TEAM from Universidad Aeronautica en Queretaro,
+ * Unauthorized reproduction and/or distribution in other universities
+ * is strictly prohibited.
+ *
+ * Redistribution of code between KA'AN SAT TEAM members is permitted,
+ * under the following conditions:
+ *
+ *  Redistribution of source code is under the KAANSAT TEAM name.
+ *
+ *  Any part of the software will not be used by other teams or
+ *  organizations.
+ *
+ */
 
 /* Standar Libraries */
 #include <math.h>
@@ -62,9 +78,10 @@
 
 /* Other Libraries */
 #include "custom/Utilities.h"   /* Library with important declarations */
-#include "Custom/Servomotor.h"  /* Servomotor */
-#include "custom/GPS.h"         /* Libreria GPS */
-#include "Custom/LSM303D.h"     /* Libreria Acelerometro/Termometro/Magnetometro */
+#include "Custom/Servomotor.h"  /* Servomotor Library */
+#include "custom/GPS.h"         /* GPS Library */
+
+//#include "Custom/LSM303D.h"     /* Libreria Acelerometro/Termometro/Magnetometro WONT USE :(*/
 
 /* USER CODE END */
 
@@ -76,20 +93,12 @@
 
 /* Preprocessor variables */
 
-/* Prioridad de Tareas */
-#define     WAIT_GCS_PRIOR      4       /*  1  */
-#define     DAT_REC_PRIOR       3       /*  2  */
-#define     SENSOR_PRIOR        1       /*  3  */
-#define     TELEMETR_PRIOR      3       /*  4  */
-#define     AUTOPILO_PRIOR      4       /*  5  */
-#define     MISSION_PRIOR       3       /*  6  */
-#define     BUZZER_PRIOR        3       /*  7  */
 
 /* Periodo Tarea periodica ENVIO ms */
 #define     TS              1000            /* Best fit 100/ 100Hz tick */
 
 /* Periodo de envio de datos segundos */
-#define     T               T1/1000.0
+#define     T               TS/1000.0
 
 #define G_gravity   9.80665 /*[m/s^2]   Cte gravitacional */
 
@@ -134,7 +143,9 @@ int main(void)
 
 
 /* USER CODE BEGIN (4) */
+
 uint8_t CreateUserTasks(void){
 
+    return 0;
 }
 /* USER CODE END */

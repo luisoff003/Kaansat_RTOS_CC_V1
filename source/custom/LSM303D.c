@@ -7,7 +7,7 @@
 
 
 #include "Custom/LSM303D.h"
-#include "Custom/Utilidades.h"
+#include "Custom/Utilities.h"
 
 spiDAT1_t   SPI2_data_configCh1;
 spiDAT1_t   SPI2_data_configCh0;

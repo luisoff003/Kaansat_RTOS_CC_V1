@@ -17,31 +17,27 @@
  *      FILE DESCRIPTION
  * -------------------------------------------------------------------
  *
- * Kaan_RTOS.h
+ * ADC_Sensors.h
  *
- *  Created on: 18/02/2020
+ *  Created on: 24/02/2020
  *      Author: Luison
  */
 
-#ifndef INCLUDE_CUSTOM_KAAN_RTOS_H_
-#define INCLUDE_CUSTOM_KAAN_RTOS_H_
+#ifndef INCLUDE_CUSTOM_ADC_SENSORS_H_
+#define INCLUDE_CUSTOM_ADC_SENSORS_H_
 
-/* RTOS Libraries */
-#include "FreeRTOS.h"
-#include "os_task.h"
-#include "os_semphr.h"
-#include "os_queue.h"
-
-/* Task Priorities */
-#define     WAIT_GCS_PRIOR      4       /*  1  */
-#define     DAT_REC_PRIOR       3       /*  2  */
-#define     SENSOR_PRIOR        1       /*  3  */
-#define     TELEMETR_PRIOR      3       /*  4  */
-#define     AUTOPILO_PRIOR      4       /*  5  */
-#define     MISSION_PRIOR       3       /*  6  */
-#define     BUZZER_PRIOR        3       /*  7  */
+/* ------------------------------
+ *              ADC
+ * ------------------------------*/
+typedef struct{
+    int id[8];
+    int ADC_conv[8];
+}ADC_channel;
+ADC_channel ADC_0_7;
+extern static adcData_t ADC_RAW[6];
+extern static int ch_count=0;
+extern static int i_j=0;
 
 
 
-
-#endif /* INCLUDE_CUSTOM_KAAN_RTOS_H_ */
+#endif /* INCLUDE_CUSTOM_ADC_SENSORS_H_ */

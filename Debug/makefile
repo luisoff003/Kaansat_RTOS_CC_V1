@@ -45,7 +45,7 @@ ORDERED_OBJS += \
 "./source/custom/KAANSAT_RTOS.obj" \
 "./source/custom/LSM303D.obj" \
 "./source/custom/Servomotor.obj" \
-"./source/custom/Utilidades.obj" \
+"./source/custom/Utilities.obj" \
 "../source/sys_link.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -191,8 +191,8 @@ Kaansat_RTOS_CC_V1.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "source\adc.obj" "source\dabort.obj" "source\errata_SSWF021_45.obj" "source\esm.obj" "source\gio.obj" "source\het.obj" "source\notification.obj" "source\os_croutine.obj" "source\os_event_groups.obj" "source\os_heap.obj" "source\os_list.obj" "source\os_mpu_wrappers.obj" "source\os_port.obj" "source\os_portasm.obj" "source\os_queue.obj" "source\os_tasks.obj" "source\os_timer.obj" "source\pinmux.obj" "source\spi.obj" "source\sys_core.obj" "source\sys_intvecs.obj" "source\sys_main.obj" "source\sys_mpu.obj" "source\sys_pcr.obj" "source\sys_phantom.obj" "source\sys_pmu.obj" "source\sys_selftest.obj" "source\sys_startup.obj" "source\sys_vim.obj" "source\system.obj" "source\custom\BMP280.obj" "source\custom\GPS.obj" "source\custom\KAANSAT_RTOS.obj" "source\custom\LSM303D.obj" "source\custom\Servomotor.obj" "source\custom\Utilidades.obj" 
-	-$(RM) "source\adc.d" "source\errata_SSWF021_45.d" "source\esm.d" "source\gio.d" "source\het.d" "source\notification.d" "source\os_croutine.d" "source\os_event_groups.d" "source\os_heap.d" "source\os_list.d" "source\os_mpu_wrappers.d" "source\os_port.d" "source\os_queue.d" "source\os_tasks.d" "source\os_timer.d" "source\pinmux.d" "source\spi.d" "source\sys_main.d" "source\sys_pcr.d" "source\sys_phantom.d" "source\sys_selftest.d" "source\sys_startup.d" "source\sys_vim.d" "source\system.d" "source\custom\BMP280.d" "source\custom\GPS.d" "source\custom\KAANSAT_RTOS.d" "source\custom\LSM303D.d" "source\custom\Servomotor.d" "source\custom\Utilidades.d" 
+	-$(RM) "source\adc.obj" "source\dabort.obj" "source\errata_SSWF021_45.obj" "source\esm.obj" "source\gio.obj" "source\het.obj" "source\notification.obj" "source\os_croutine.obj" "source\os_event_groups.obj" "source\os_heap.obj" "source\os_list.obj" "source\os_mpu_wrappers.obj" "source\os_port.obj" "source\os_portasm.obj" "source\os_queue.obj" "source\os_tasks.obj" "source\os_timer.obj" "source\pinmux.obj" "source\spi.obj" "source\sys_core.obj" "source\sys_intvecs.obj" "source\sys_main.obj" "source\sys_mpu.obj" "source\sys_pcr.obj" "source\sys_phantom.obj" "source\sys_pmu.obj" "source\sys_selftest.obj" "source\sys_startup.obj" "source\sys_vim.obj" "source\system.obj" "source\custom\BMP280.obj" "source\custom\GPS.obj" "source\custom\KAANSAT_RTOS.obj" "source\custom\LSM303D.obj" "source\custom\Servomotor.obj" "source\custom\Utilities.obj" 
+	-$(RM) "source\adc.d" "source\errata_SSWF021_45.d" "source\esm.d" "source\gio.d" "source\het.d" "source\notification.d" "source\os_croutine.d" "source\os_event_groups.d" "source\os_heap.d" "source\os_list.d" "source\os_mpu_wrappers.d" "source\os_port.d" "source\os_queue.d" "source\os_tasks.d" "source\os_timer.d" "source\pinmux.d" "source\spi.d" "source\sys_main.d" "source\sys_pcr.d" "source\sys_phantom.d" "source\sys_selftest.d" "source\sys_startup.d" "source\sys_vim.d" "source\system.d" "source\custom\BMP280.d" "source\custom\GPS.d" "source\custom\KAANSAT_RTOS.d" "source\custom\LSM303D.d" "source\custom\Servomotor.d" "source\custom\Utilities.d" 
 	-$(RM) "source\dabort.d" "source\os_portasm.d" "source\sys_core.d" "source\sys_intvecs.d" "source\sys_mpu.d" "source\sys_pmu.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
