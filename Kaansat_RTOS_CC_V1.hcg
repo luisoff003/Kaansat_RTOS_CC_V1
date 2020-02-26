@@ -283,7 +283,9 @@
       <HDRSCI>
         <NAME>sci.h</NAME>
       </HDRSCI>
-      <SRCSCI/>
+      <SRCSCI>
+        <NAME>sci.c</NAME>
+      </SRCSCI>
       <HDRMIBSPI_R>
         <NAME>reg_mibspi.h</NAME>
       </HDRMIBSPI_R>
@@ -536,7 +538,7 @@
         <PATH>include\sci.h</PATH>
       </HDRSCI>
       <SRCSCI>
-        <PATH/>
+        <PATH>source\sci.c</PATH>
       </SRCSCI>
     </FILENAMES>
   </SCI>

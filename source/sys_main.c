@@ -80,6 +80,7 @@
 #include "custom/Utilities.h"   /* Library with important declarations */
 #include "Custom/Servomotor.h"  /* Servomotor Library */
 #include "custom/GPS.h"         /* GPS Library */
+#include "Custom/KAANSAT_RTOS.h"
 
 //#include "Custom/LSM303D.h"     /* Libreria Acelerometro/Termometro/Magnetometro WONT USE :(*/
 
@@ -92,13 +93,6 @@
 /* USER CODE BEGIN (1) */
 
 /* Preprocessor variables */
-
-
-/* Periodo Tarea periodica ENVIO ms */
-#define     TS              1000            /* Best fit 100/ 100Hz tick */
-
-/* Periodo de envio de datos segundos */
-#define     T               TS/1000.0
 
 #define G_gravity   9.80665 /*[m/s^2]   Cte gravitacional */
 
@@ -119,7 +113,18 @@
  *          RTOS Tasks
  *--------------------------------*/
 void vApplicationIdleHook(void);    /*< Funcion de servicio de Inactividad */
-uint8_t CreateUserTasks(void);      /*< Crear tareas del usuario */
+
+/* ------------------------------
+ *              SCI
+ * ------------------------------*/
+/* Enviar datos por serial */
+bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc);
+/* Interrupcion SCI */
+void sciNotification(sciBASE_t *sci, unsigned flags );
+/* Variable recibida */
+static unsigned char receivedData[2];
+static unsigned char receivedData_2[2];
+
 
 /* USER CODE END */
 
@@ -127,8 +132,20 @@ int main(void)
 {
 /* USER CODE BEGIN (3) */
 
+    /* Peripherals */
+    sciInit();
+    gioInit();
+    spiInit();
+    hetInit();
+    adcInit();
+
+    sciEnableNotification(scilinREG, SCI_RX_INT);
+
+    _enable_IRQ();
+    _enable_interrupt_();
+
     /* Await further character */
-    //sciReceive(scilinREG, 1, ( unsigned char *)receivedData);
+    sciReceive(scilinREG, 1, ( unsigned char *)receivedData);
 
     CreateUserTasks();
     vTaskStartScheduler();    /*< Start scheduler */
@@ -143,9 +160,31 @@ int main(void)
 
 
 /* USER CODE BEGIN (4) */
+/* SCI Interruption */
+void sciNotification(sciBASE_t *sci, unsigned flags ){
+        /* Echo received character
+         * Debe estar comentado para no ver lo que recibe por SCI */
+   // sciSend(sci, 1, (unsigned char *)&receivedData);
 
-uint8_t CreateUserTasks(void){
+        /* Await further character */
+    sciReceive(sci, 1, (unsigned char *)&receivedData);
+    receivedData_2[0] = receivedData[0];
 
-    return 0;
+    /* Guardar datos de cadenas GPS completas */
+    if( getData_GPS( &xGPSn, receivedData_2[0] ) ){
+        /* Actualizar nuevas posiciones */
+        xGPSdata = xGPSn;
+    }
+
 }
+
+/* Send data thru SCI */
+bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc) {
+    sciSend(scilinREG, numOfDat, (uint8 *)charDat);
+    if (sc) {
+        sciSend(scilinREG, 0x02, (unsigned char *)"\r\n");
+    }
+    return true;
+}
+
 /* USER CODE END */
