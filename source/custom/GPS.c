@@ -1,4 +1,22 @@
 /*
+ * KAAN SAT TEAM PROPRIETARY INFORMATION - kaansat@soyunaq.mx
+ *
+ * Property of KA'AN SAT TEAM from Universidad Aeronautica en Queretaro,
+ * Unauthorized reproduction and/or distribution in other universities
+ * is strictly prohibited.
+ *
+ * Redistribution of code between KA'AN SAT TEAM members is permitted,
+ * under the following conditions:
+ *
+ *  Redistribution of source code is under the KAANSAT TEAM name.
+ *
+ *  Any part of the software will not be used by other teams or
+ *  organizations.
+ *
+ * -------------------------------------------------------------------
+ *      FILE DESCRIPTION
+ * -------------------------------------------------------------------
+ *
  * GPS.c
  *
  *  Created on: 26/08/2019
@@ -12,7 +30,7 @@
  * Estados para Automaton Search
  */
 enum xAutomatonStates{
-    state_GPGGA =   0x00,
+    state_GPGGA =   0,
     state_G1,
     state_P,
     state_G2,
@@ -96,13 +114,13 @@ uint8_t getData_GPS( xGPGGA *pGPSdata, unsigned char GPGGA_char ){
     /* Automaton String Search */
     switch(GPGGA_char){
     case '$':
-        if(s_GPS==0){
+        if(s_GPS == state_GPGGA){
             s_GPS++;
         }
         break;
     case 'g':
     case 'G':
-        if( s_GPS == 1 || s_GPS == 3 || s_GPS == 4 ){
+        if( s_GPS == state_G1 || s_GPS == state_G2 || s_GPS == state_G3 ){
             s_GPS++;
         }
         else{
@@ -111,7 +129,7 @@ uint8_t getData_GPS( xGPGGA *pGPSdata, unsigned char GPGGA_char ){
         break;
     case 'p':
     case 'P':
-        if(s_GPS == 2){
+        if(s_GPS == state_P){
             s_GPS++;
         }
         else{

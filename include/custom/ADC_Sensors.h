@@ -26,18 +26,20 @@
 #ifndef INCLUDE_CUSTOM_ADC_SENSORS_H_
 #define INCLUDE_CUSTOM_ADC_SENSORS_H_
 
-/* ------------------------------
- *              ADC
- * ------------------------------*/
+#include "Utilities.h"
+
 typedef struct{
     int id[8];
     int ADC_conv[8];
 }ADC_channel;
-ADC_channel ADC_0_7;
-extern static adcData_t ADC_RAW[6];
-extern static int ch_count=0;
-extern static int i_j=0;
 
+extern ADC_channel ADC_0_7;
 
+static adcData_t ADC_RAW[6];
+static int ch_count;
+static int i_j;
+
+uint8_t Read_All_ADC(adcBASE_t *adc,uint32 group, ADC_channel *ADC_data);
+int Get_ADC_Value(int ID);
 
 #endif /* INCLUDE_CUSTOM_ADC_SENSORS_H_ */

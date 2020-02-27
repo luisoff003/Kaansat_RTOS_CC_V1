@@ -40,21 +40,21 @@
 #include "custom/GPS.h"         /* GPS Library */
 
 /* Task Priorities */
-#define     WAIT2START_PRIOR    4       /*  1  */
-#define     DAT_REC_PRIOR       3       /*  2  */
+#define     WAIT2START_PRIOR    3       /*  1  */
+#define     DAT_REC_PRIOR       4       /*  2  */
 #define     SENSOR_PRIOR        1       /*  3  */
-#define     TELEMETR_PRIOR      3       /*  4  */
-#define     AUTOPILO_PRIOR      4       /*  5  */
-#define     MISSION_PRIOR       3       /*  6  */
+#define     TELEMETR_PRIOR      2       /*  4  */
+#define     AUTOPILOT_PRIOR     1       /*  5  */
+#define     MISSION_PRIOR       1       /*  6  */
 #define     BUZZER_PRIOR        3       /*  7  */
 
-
-/* Telemetry Task Period ms */
-#define     TS              1000            /* Best fit 100/ 100Hz tick */
-
-/* Telemetry Task Period secs */
-#define     T               TS/1000.0
-
+/* Sample/Task Periods */
+#define     T_TELEMETRY        1000     /*< Telemetry Task Period [ms] Best fit 100/ 100Hz tick */
+#define     T_SENSORS           10     /*< Sensors Task Period */
+#define     T_CONTROL           20     /*< Control/Autopilot Period */
+#define     T    T_TELEMETRY/1000.0     /*< Telemetry Task Period [s] */
+#define     T_SHORT_BUZZER      400     /*< Short period for BUZZER [ms] */
+#define     T_LONG_BUZZER      1000     /*< Long period for BUZZER [ms] */
 /*--------------------------------
  *          RTOS Tasks
  *--------------------------------*/
@@ -73,31 +73,35 @@ xTaskHandle xHandle_TELEMETRY;              /*< Handle variable for TIMER task *
 /* Task 2:     SENSORS
  * Update sensor data ( SPI/ADC/UART ) every 0.01s */
 void vTask_SENSORS(void *pcParameters);
-xTaskHandle xManejador_SENSORS;         /*< Handle variable for SENSORS task */
+xTaskHandle xHandle_SENSORS;         /*< Handle variable for SENSORS task */
 
 /* Task 3:     SAT-OPS
  * Handles deployment conditions and save data into SD every 0.01s */
 void vTask_SAT_OPS(void *pcParameters);
-xTaskHandle xManejador_SAT_OPS;         /*< Handle variable for SAT_OPS task */
+xTaskHandle xHandle_SAT_OPS;         /*< Handle variable for SAT_OPS task */
 
 /* Task 4:     DATA RECOVERY
  * Recover actual state of the mission from SD card. */
 void vTask_DATA_RECOV(void *pcParameters);
-xTaskHandle xManejador_DATA_RECOV;      /*< Handle variable for DATA_RECOV task */
+ xTaskHandle xHandle_DATA_RECOV;      /*< Handle variable for DATA_RECOV task */
 
 /* Task 5:     AUTOPILOT/CONTROL CAMERA
  * Circular controlled descend and camera gimbal control. */
 void vTask_CONTROL(void *pcParameters);
-xTaskHandle xManejador_CONTROL;         /*< Handle variable for DATA_RECOV task */
+xTaskHandle xHandle_CONTROL;         /*< Handle variable for DATA_RECOV task */
 
 /* Task 6:     BUZZER
  * Eneables buzzer sound in SOS pattern. */
 void vTask_BUZZER(void *pcParameters);
-xTaskHandle xManejador_BUZZER;          /*< Handle variable for DATA_RECOV task */
-
+xTaskHandle xHandle_BUZZER;          /*< Handle variable for DATA_RECOV task */
 
 uint8_t CreateUserTasks(void);      /*< User Tasks */
 
-
+uint8_t CansatReady_CreateState(void);
+uint8_t TelemetryStarted_CreateState(void);
+uint8_t RocketTakeOff_CreateState(void);
+uint8_t CansatSeparation_CreateState(void);
+uint8_t PayloadRealese_CreateState(void);
+uint8_t Landing_CreateState(void);
 
 #endif /* INCLUDE_CUSTOM_KAAN_RTOS_H_ */

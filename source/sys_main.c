@@ -60,7 +60,7 @@
  *
  */
 
-/* Standar Libraries */
+/* Standard Libraries */
 #include <math.h>
 
 /* Peripheral Libraries  */
@@ -117,8 +117,6 @@ void vApplicationIdleHook(void);    /*< Funcion de servicio de Inactividad */
 /* ------------------------------
  *              SCI
  * ------------------------------*/
-/* Enviar datos por serial */
-bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc);
 /* Interrupcion SCI */
 void sciNotification(sciBASE_t *sci, unsigned flags );
 /* Variable recibida */
@@ -147,7 +145,11 @@ int main(void)
     /* Await further character */
     sciReceive(scilinREG, 1, ( unsigned char *)receivedData);
 
+    /* Check FSW State */
+    /* --------Read SD card---------- */
+
     CreateUserTasks();
+
     vTaskStartScheduler();    /*< Start scheduler */
 
     while(1){
@@ -176,15 +178,6 @@ void sciNotification(sciBASE_t *sci, unsigned flags ){
         xGPSdata = xGPSn;
     }
 
-}
-
-/* Send data thru SCI */
-bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc) {
-    sciSend(scilinREG, numOfDat, (uint8 *)charDat);
-    if (sc) {
-        sciSend(scilinREG, 0x02, (unsigned char *)"\r\n");
-    }
-    return true;
 }
 
 /* USER CODE END */

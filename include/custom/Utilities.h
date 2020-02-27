@@ -30,9 +30,12 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-#include "custom/GPS.h"
+/* Peripheral Libraries  */
+#include "sci.h"
 #include "gio.h"
+#include "adc.h"
 #include "het.h"
+#include "spi.h"
 
 /* RTOS Libraries */
 #include "FreeRTOS.h"
@@ -40,14 +43,38 @@
 #include "os_semphr.h"
 #include "os_queue.h"
 
+/* Other libraries */
+#include "custom/GPS.h"
+#include "custom/ADC_Sensors.h"
+
 /* ADC pin declarations */
-#define AD_VOLT_BAT     0           /*< ADIN0 TMS570LS04 */
-#define AD_PITOT        1           /*< ADIN1 TMS570LS04 */
+#define AD_VOLT_BAT         0           /*< ADIN0 TMS570LS04 */
+#define AD_PITOT            1           /*< ADIN1 TMS570LS04 */
+#define AD_DUST             2           /*< ADIN2 TMS570LS04 */
 
 /* GIO pin declarations */
-#define GIO_ON_OFFLED   0           /*< GIOA0 TMS570LS04 */
+#define GIO_ON_OFFLED       0           /*< GIOA0 TMS570LS04 */
+#define GIO_BUZZER          4           /*< GIOA1 TMS570LS04 */
+#define PORT_BUZZER         hetPORT1    /*< Buzzer Port */
+
+/* HET pin declarations */
+#define HET_DUST            pwm0           /*< HET00 TMS570LS04 */
+#define HET_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
+#define HET_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
+#define HET_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
 
 #define COMM_SIZE     255
+
+/* Current states for the Mission */
+enum Mission_States{
+    Cansat_Ready        = 0U,
+    Telemetry_started   = 1U,
+    Rocket_TakeOff      = 2U,
+    Rocket_Apogee       = 3U,
+    Cansat_Separation   = 4U,
+    Payload_Realese     = 5U,
+    Landing             = 6U
+};
 
 /* -------------------------------------------------------------------
  *  GLOBAL VARIABLES
@@ -107,6 +134,13 @@ extern char cMAG_NORTH[6];
 
 /* SPI DATA OK? */
 extern int dataSPI_ok;
+
+/* GCS signal is given */
+extern uint8_t START_TELEMETRY;
+
+/* Historical Altitude */
+extern int h_Altitude[10];
+
 /* -------------------------------------------------------------------
  *  FUNCTIONS
  * ------------------------------------------------------------------- */
@@ -120,5 +154,8 @@ void Create_Packets(void);
 void ftoa(float n, char *res, int afterpoint);
 static void reverse(char *, size_t);
 size_t  sltoa(char *s, long int n);
+
+/* Enviar datos por serial */
+bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc);
 
 #endif /* INCLUDE_CUSTOM_UTILITIES_H_ */

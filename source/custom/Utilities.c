@@ -17,9 +17,9 @@
  *      FILE DESCRIPTION
  * -------------------------------------------------------------------
  *
- * Utilidades.c
+ * Utilities.c
  *
- *  Created on: 27/08/2019
+ *  Created on: 18/02/2020
  *      Author: Luison
  */
 
@@ -37,45 +37,45 @@ float MISSION_TIME = 0.0;
 char cMISSION_TIME[6];
 
 /* Packet Count [Units] */
-int PACKET_COUNT = 0;
-char cPACKET_COUNT[6] = "XXXXXX";
+int PACKET_COUNT = 1;
+char cPACKET_COUNT[6] = "PC";
 
 /* Altitude [m] */
 float ALTITUDE_BAR = 0.0;
-char cALTITUDE_BAR[8] = "XXXXXXXX";
+char cALTITUDE_BAR[8] = "h";
 
 /* Pressure [Pa] */
 float PRESS_BAR = 0.0;
-char cPRESS_BAR[8] = "XXXXXXXX";
+char cPRESS_BAR[8] = "PR";
 
 
 /* Temperature [°C] */
 float TEMPERATURE = 0.0;
-char cTEMPERATURE[8] = "XXXXXXXX";
+char cTEMPERATURE[8] = "T";
 
 /* Battery Voltage [v] */
 float VOLT_BATT = 0.0;
-char cVOLT_BATT[4] = "XXXX";
+char cVOLT_BATT[4] = "V";
 
 /* GPS Lat/Lon [Decimal Deg] */
-char cLAT[10] ;           /* Latitude */
-char cLON[10] ;           /* Longitude */
+char cLAT[10] = "LA" ;           /* Latitude */
+char cLON[10] = "LO" ;           /* Longitude */
 
 /* GPS Altitude [m] */
-char cALT[7] ;            /* Altitude */
-char cNSATS[3] ;
+char cALT[7] = "HG" ;            /* Altitude */
+char cNSATS[3] = "NS" ;
 
 /* Airspeed [m/s] */
-float AIRSPEED;
-char cAIRSPEED[5];
+float AIRSPEED ;
+char cAIRSPEED[5] = "AR";
 
 /* Software State [int] */
 uint8_t FSW_STATE;
-char cFSW_STATE[4];
+char cFSW_STATE[4] = "SW";
 
 /* Particle Count [mg/m^3] */
 float PARTICLES;
-char cPARTICLES[6];
+char cPARTICLES[6] = "P";
 
 /* BONUS Magnetic North */
 float MAG_NORTH;
@@ -83,7 +83,14 @@ char cMAG_NORTH[6];
 
 /* SPI DATA OK? */
 int dataSPI_ok = 0;     /*<This variable avoids RTOS crashes */
-/* -------------------------------------------------------------------
+
+/* GCS signal is given */
+uint8_t START_TELEMETRY = 0;
+
+/* Historical Altitude */
+int h_Altitude[10] = {};
+
+/* -----------------------------------2--------------------------------
  *  FUNCTIONS
  * ------------------------------------------------------------------- */
 /* Prepara los paquetes de datos a mandar.
@@ -220,4 +227,13 @@ static void reverse(char *s, size_t s_len) {
         s[i] = s[j];
         s[j] = swap;
     }
+}
+
+/* Send data SCI */
+bool sciEnviarDatos(uint8 numOfDat, char* charDat, bool sc) {
+    sciSend(scilinREG, numOfDat, (uint8 *)charDat);
+    if (sc) {
+        sciSend(scilinREG, 0x02, (unsigned char *)"\r\n");
+    }
+    return true;
 }
