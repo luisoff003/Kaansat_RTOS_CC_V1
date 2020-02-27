@@ -129,7 +129,6 @@ portTickType xLastWakeTime;
                 break;
         }
 
-//        vTaskDelay(portMAX_DELAY);
         vTaskDelete( xHandle_DATA_RECOV );
 
     }
@@ -143,6 +142,12 @@ portTickType xLastWakeTimeSensors;
     /* Start count on actual Tick */
     xLastWakeTimeSensors = xTaskGetTickCount();
 
+    /* Set pwm for Dust Sensor */
+    pwm0_het0_DUST.duty = 320;
+    pwm0_het0_DUST.period = 10000;
+    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
+    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
+
     /* Infinite Loop */
     for(;;){
         /* ---------------- SPI ------------------- */
@@ -152,9 +157,9 @@ portTickType xLastWakeTimeSensors;
 
         /* --------------- ADC ------------------- */
         if( Read_All_ADC(adcREG1, adcGROUP1, &ADC_0_7) == 0){
-            VOLT_BATT = (float)Get_ADC_Value(AD_VOLT_BAT)*(3.3f/4096.0f); /*< Read Battery Voltage */
-            AIRSPEED = (float)Get_ADC_Value(AD_PITOT);                  /*< Read Airspeed */
-            /* Dust Sensor */
+            VOLT_BATT = (float)Get_ADC_Value(AD_VOLT_BAT)*(3.3f/4096.0f);   /*< Read Battery Voltage    [V] */
+            AIRSPEED = (float)Get_ADC_Value(AD_PITOT);                      /*< Read Airspeed           [m/s] */
+            /* DUST is read by HET interrupt */
         }
         /* ---------------- SPI ------------------- */
         /* Read Mag/Accel/Gyro  MPU9250 */

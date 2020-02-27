@@ -17,30 +17,29 @@
  *      FILE DESCRIPTION
  * -------------------------------------------------------------------
  *
- * Servomotor.h
+ * PWM_Sensors.h
  *
- *  Created on: 23/09/2019
+ *  Created on: 27/02/2020
  *      Author: Luison
  */
 
-#ifndef INCLUDE_CUSTOM_SERVOMOTOR_H_
-#define INCLUDE_CUSTOM_SERVOMOTOR_H_
+#ifndef INCLUDE_CUSTOM_PWM_SENSORS_H_
+#define INCLUDE_CUSTOM_PWM_SENSORS_H_
 
+/* Peripheral Libraries  */
 #include "het.h"
 
-static const uint32 s_het1pwmPolarity[8U] =
-{
-    3U,
-    3U,
-    3U,
-    3U,
-    3U,
-    3U,
-    3U,
-    3U,
-};
+/* Other libraries */
+#include "Utilities.h"
+#include "Servomotor.h"
 
-void pwmSetSignal10e3(hetRAMBASE_t * hetRAM, uint32 pwm, hetSIGNAL_t signal);
+/* HET signal initial values (duty/period) */
+extern hetSIGNAL_t pwm0_het0_DUST;
+extern hetSIGNAL_t pwm1_het2_LIBER;
+extern hetSIGNAL_t pwm2_het4_SERVO_L;
+extern hetSIGNAL_t pwm3_het6_SERVO_R;
 
+/* pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY); */
+void   pwmEnableNotification(hetBASE_t * hetREG,uint32 pwm, uint32 notification);
 
-#endif /* INCLUDE_CUSTOM_SERVOMOTOR_H_ */
+#endif /* INCLUDE_CUSTOM_PWM_SENSORS_H_ */

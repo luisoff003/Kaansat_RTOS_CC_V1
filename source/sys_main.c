@@ -117,12 +117,18 @@ void vApplicationIdleHook(void);    /*< Funcion de servicio de Inactividad */
 /* ------------------------------
  *              SCI
  * ------------------------------*/
-/* Interrupcion SCI */
+/* SCI Interruption */
 void sciNotification(sciBASE_t *sci, unsigned flags );
-/* Variable recibida */
+/* Received Variable */
 static unsigned char receivedData[2];
 static unsigned char receivedData_2[2];
 
+
+/* ------------------------------
+ *              HET
+ * ------------------------------*/
+/* HET interrupt */
+void   pwmNotification(hetBASE_t * hetREG,uint32 pwm, uint32 notification);
 
 /* USER CODE END */
 
@@ -178,6 +184,12 @@ void sciNotification(sciBASE_t *sci, unsigned flags ){
         xGPSdata = xGPSn;
     }
 
+}
+
+void   pwmNotification(hetBASE_t * hetREG,uint32 pwm, uint32 notification){
+    /* Update Dust Sensor value */
+    PARTICLES = (float)(11.0f/81900.0f) *
+                ( Get_ADC_Value(AD_DUST) - (6825.0f/11.0f) );           /*< Read Dust Sensor        [mg/mm^3] */
 }
 
 /* USER CODE END */

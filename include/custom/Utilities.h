@@ -46,6 +46,7 @@
 /* Other libraries */
 #include "custom/GPS.h"
 #include "custom/ADC_Sensors.h"
+#include "custom/PWM_Sensors.h"
 
 /* ADC pin declarations
  * NOTE: Use continuous pins [0,1,2], [2,3,4], etc
@@ -68,6 +69,8 @@
 /* Servo Position declarations */
 #define SERVO_FREE          500
 #define SERVO_ATACHED       850
+#define SERVO_INITIAL_L     500
+#define SERVO_INITIAL_R     500
 
 #define COMM_SIZE     255
 
