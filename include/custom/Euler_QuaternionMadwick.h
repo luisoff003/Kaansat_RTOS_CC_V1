@@ -26,10 +26,12 @@
 #ifndef INCLUDE_CUSTOM_EULER_QUATERNIONMADWICK_H_
 #define INCLUDE_CUSTOM_EULER_QUATERNIONMADWICK_H_
 
-float twoKp;        // 2 * proportional gain (Kp)
-float twoKi;        // 2 * integral gain (Ki)
-float q0, q1, q2, q3;   // quaternion of sensor frame relative to auxiliary frame
-float integralFBx, integralFBy, integralFBz;  // integral error terms scaled by Ki
+#include "math.h"
+
+extern volatile float twoKp;            // 2 * proportional gain (Kp)
+extern volatile float twoKi;            // 2 * integral gain (Ki)
+extern volatile float q0, q1, q2, q3;   // quaternion of sensor frame relative to auxiliary frame
+
 float invSampleFreq;
 float roll, pitch, yaw;
 char anglesComputed;
@@ -38,8 +40,8 @@ void Mahony(void);
 static float invSqrt(float x);
 void computeAngles();
 void begin(float sampleFrequency);
-void update(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
-void updateIMU(float gx, float gy, float gz, float ax, float ay, float az);
+void MahonyAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
+void MahonyAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
 float getRoll(void);
 float getPitch(void);
 float getYaw(void);

@@ -8,7 +8,6 @@
 #ifndef SOURCE_CUSTOM_SERVOMOTOR_C_
 #define SOURCE_CUSTOM_SERVOMOTOR_C_
 
-#include "het.h"
 #include "custom/Servomotor.h"
 
 void pwmSetSignal10e3(hetRAMBASE_t * hetRAM, uint32 pwm, hetSIGNAL_t signal){

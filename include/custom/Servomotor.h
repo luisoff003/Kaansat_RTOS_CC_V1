@@ -8,6 +8,8 @@
 #ifndef INCLUDE_CUSTOM_SERVOMOTOR_H_
 #define INCLUDE_CUSTOM_SERVOMOTOR_H_
 
+#include "het.h"
+
 static const uint32 s_het1pwmPolarity[8U] =
 {
     3U,

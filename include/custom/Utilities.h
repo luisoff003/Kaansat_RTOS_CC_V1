@@ -47,7 +47,9 @@
 #include "custom/GPS.h"
 #include "custom/ADC_Sensors.h"
 
-/* ADC pin declarations */
+/* ADC pin declarations
+ * NOTE: Use continuous pins [0,1,2], [2,3,4], etc
+ * Using separated pins will produce fatal errors. */
 #define AD_VOLT_BAT         0           /*< ADIN0 TMS570LS04 */
 #define AD_PITOT            1           /*< ADIN1 TMS570LS04 */
 #define AD_DUST             2           /*< ADIN2 TMS570LS04 */
@@ -62,6 +64,10 @@
 #define HET_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
 #define HET_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
 #define HET_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
+
+/* Servo Position declarations */
+#define SERVO_FREE          500
+#define SERVO_ATACHED       850
 
 #define COMM_SIZE     255
 
