@@ -24,12 +24,6 @@
  *
  */
 
-/* HET pin declarations */
-#define HET_DUST            pwm0           /*< HET00 TMS570LS04 */
-#define HET_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
-#define HET_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
-#define HET_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
-
 #include "custom/PWM_Sensors.h"
 
 /* HET signal initial values (duty/period) */

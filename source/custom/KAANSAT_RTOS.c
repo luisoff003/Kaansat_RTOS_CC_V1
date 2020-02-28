@@ -43,7 +43,6 @@ uint8_t CreateUserTasks(void){
  *  Wait until GCS signal is given to start mission. */
 void vTask_WAIT2START(void *pcParameters){
 //portTickType xLastWakeTimeWait;
-
     /* Start count on actual Tick */
 //    xLastWakeTimeWait = xTaskGetTickCount();
     for(;;){
@@ -141,12 +140,6 @@ portTickType xLastWakeTimeSensors;
 
     /* Start count on actual Tick */
     xLastWakeTimeSensors = xTaskGetTickCount();
-
-    /* Set pwm for Dust Sensor */
-    pwm0_het0_DUST.duty = 320;
-    pwm0_het0_DUST.period = 10000;
-    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
-    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
 
     /* Infinite Loop */
     for(;;){
@@ -264,55 +257,40 @@ portTickType xLastWakeTime;
     /* Start count on actual Tick */
     xLastWakeTime = xTaskGetTickCount();
 
+    int i = 0;
+
     /* Infinite Loop */
     for(;;){
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     1 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+        for(i=0; i<3U; i++){
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     1 */
+            /* Se duerme 400 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      2 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      2 */
+            /* Se duerme 400 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+        }
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     3 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+        for(i=0; i<3U; i++){
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     7 */
+            /* Se duerme 1000 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      4 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      8 */
+            /* Se duerme 400 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
+        }
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     5 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+        for(i=0; i<3U; i++){
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     1 */
+            /* Se duerme 400 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      6 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      2 */
+            /* Se duerme 400 ms */
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+        }
 
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     7 */
-        /* Se duerme 1000 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
-
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      8 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
-
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     9 */
-        /* Se duerme 1000 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
-
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      10 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
-
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     11 */
-        /* Se duerme 1000 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
-
-        gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      12 */
-        /* Se duerme 400 ms */
-        vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
     }
 }
 
@@ -336,6 +314,12 @@ uint8_t TelemetryStarted_CreateState(void){
     if( xTaskCreate(vTask_SAT_OPS, "MISSION OPS", configMINIMAL_STACK_SIZE, NULL, MISSION_PRIOR, &xHandle_SAT_OPS) != pdTRUE ){
         while(1);   /* Error */
     }
+    /* Set pwm for Dust Sensor */
+    pwm0_het0_DUST.duty = 320;
+    pwm0_het0_DUST.period = 10000;
+    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
+    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
+
     return 0;
 }
 uint8_t RocketTakeOff_CreateState(void){
@@ -351,6 +335,12 @@ uint8_t RocketTakeOff_CreateState(void){
     if( xTaskCreate(vTask_SAT_OPS, "MISSION OPS", configMINIMAL_STACK_SIZE, NULL, MISSION_PRIOR, &xHandle_SAT_OPS) != pdTRUE ){
         while(1);   /* Error */
     }
+    /* Set pwm for Dust Sensor */
+    pwm0_het0_DUST.duty = 320;
+    pwm0_het0_DUST.period = 10000;
+    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
+    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
+
     return 0;
 }
 
@@ -367,6 +357,7 @@ uint8_t CansatSeparation_CreateState(void){
     if( xTaskCreate(vTask_SAT_OPS, "MISSION OPS", configMINIMAL_STACK_SIZE, NULL, MISSION_PRIOR, &xHandle_SAT_OPS) != pdTRUE ){
         while(1);   /* Error */
     }
+
     return 0;
 }
 
