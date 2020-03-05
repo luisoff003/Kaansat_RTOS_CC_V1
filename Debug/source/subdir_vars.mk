@@ -20,6 +20,7 @@ C_SRCS += \
 ../source/gio.c \
 ../source/guidance_model.c \
 ../source/het.c \
+../source/main.c \
 ../source/notification.c \
 ../source/os_croutine.c \
 ../source/os_event_groups.c \
@@ -32,7 +33,6 @@ C_SRCS += \
 ../source/os_timer.c \
 ../source/param.c \
 ../source/path_follow.c \
-../source/path_manager.c \
 ../source/path_manager_chap10.c \
 ../source/pinmux.c \
 ../source/sci.c \
@@ -52,6 +52,7 @@ C_DEPS += \
 ./source/gio.d \
 ./source/guidance_model.d \
 ./source/het.d \
+./source/main.d \
 ./source/notification.d \
 ./source/os_croutine.d \
 ./source/os_event_groups.d \
@@ -64,7 +65,6 @@ C_DEPS += \
 ./source/os_timer.d \
 ./source/param.d \
 ./source/path_follow.d \
-./source/path_manager.d \
 ./source/path_manager_chap10.d \
 ./source/pinmux.d \
 ./source/sci.d \
@@ -85,6 +85,7 @@ OBJS += \
 ./source/gio.obj \
 ./source/guidance_model.obj \
 ./source/het.obj \
+./source/main.obj \
 ./source/notification.obj \
 ./source/os_croutine.obj \
 ./source/os_event_groups.obj \
@@ -98,7 +99,6 @@ OBJS += \
 ./source/os_timer.obj \
 ./source/param.obj \
 ./source/path_follow.obj \
-./source/path_manager.obj \
 ./source/path_manager_chap10.obj \
 ./source/pinmux.obj \
 ./source/sci.obj \
@@ -131,6 +131,7 @@ OBJS__QUOTED += \
 "source\gio.obj" \
 "source\guidance_model.obj" \
 "source\het.obj" \
+"source\main.obj" \
 "source\notification.obj" \
 "source\os_croutine.obj" \
 "source\os_event_groups.obj" \
@@ -144,7 +145,6 @@ OBJS__QUOTED += \
 "source\os_timer.obj" \
 "source\param.obj" \
 "source\path_follow.obj" \
-"source\path_manager.obj" \
 "source\path_manager_chap10.obj" \
 "source\pinmux.obj" \
 "source\sci.obj" \
@@ -168,6 +168,7 @@ C_DEPS__QUOTED += \
 "source\gio.d" \
 "source\guidance_model.d" \
 "source\het.d" \
+"source\main.d" \
 "source\notification.d" \
 "source\os_croutine.d" \
 "source\os_event_groups.d" \
@@ -180,7 +181,6 @@ C_DEPS__QUOTED += \
 "source\os_timer.d" \
 "source\param.d" \
 "source\path_follow.d" \
-"source\path_manager.d" \
 "source\path_manager_chap10.d" \
 "source\pinmux.d" \
 "source\sci.d" \
@@ -208,6 +208,7 @@ C_SRCS__QUOTED += \
 "../source/gio.c" \
 "../source/guidance_model.c" \
 "../source/het.c" \
+"../source/main.c" \
 "../source/notification.c" \
 "../source/os_croutine.c" \
 "../source/os_event_groups.c" \
@@ -220,7 +221,6 @@ C_SRCS__QUOTED += \
 "../source/os_timer.c" \
 "../source/param.c" \
 "../source/path_follow.c" \
-"../source/path_manager.c" \
 "../source/path_manager_chap10.c" \
 "../source/pinmux.c" \
 "../source/sci.c" \
