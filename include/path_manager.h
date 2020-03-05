@@ -40,7 +40,7 @@ unsigned int flag;
 float Va_d;
 float r[3];
 float q[3];
-float q2[3];
+//float q2[3];
 float c[3];
 float rho;
 float lambda;

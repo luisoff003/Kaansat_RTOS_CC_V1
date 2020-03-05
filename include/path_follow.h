@@ -31,7 +31,7 @@
   float chi;
   //float p;
   //float q;
-  float r2;
+  //float r2;
   //float Vg;
   //float wn;
   //float we;

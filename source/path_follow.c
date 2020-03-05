@@ -61,7 +61,7 @@ float* path_follow(float *in)
   chi       = in[9+NN];
   // p       = in[10+NN];
   // q       = in[11+NN];
-  r2       = in[12+NN];
+  //r2       = in[12+NN];
   // Vg      = in[13+NN];
   // wn      = in[14+NN];
   // we      = in[15+NN];
