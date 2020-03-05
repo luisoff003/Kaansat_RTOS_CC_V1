@@ -21,6 +21,7 @@
  *
  *  Created on: 27/08/2019
  *      Author: Luison
+ * Bibliography: https://www.freertos.org/index.html
  */
 
 #include "Custom/KAANSAT_RTOS.h"
@@ -84,8 +85,6 @@ portTickType xLastWakeTime;
 
     /* Infinite Loop */
     for(;;){
-        /* Read states from SD card */
-        FSW_STATE = Cansat_Ready;           /*<-----------------  Change for SD card reading STATE */
 
         /* Identify which state it is and set variables */
         switch( FSW_STATE ){
@@ -128,6 +127,7 @@ portTickType xLastWakeTime;
                 break;
         }
 
+        /* Kill itself, world is a bad place :( */
         vTaskDelete( xHandle_DATA_RECOV );
 
     }
@@ -262,31 +262,31 @@ portTickType xLastWakeTime;
     /* Infinite Loop */
     for(;;){
         for(i=0; i<3U; i++){
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     1 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
             /* Se duerme 400 ms */
             vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
 
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      2 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
             /* Se duerme 400 ms */
             vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
         }
 
         for(i=0; i<3U; i++){
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     7 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
             /* Se duerme 1000 ms */
             vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
 
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      8 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
             /* Se duerme 400 ms */
             vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
         }
 
         for(i=0; i<3U; i++){
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF     1 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
             /* Se duerme 400 ms */
             vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
 
-            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON      2 */
+            gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
             /* Se duerme 400 ms */
             vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
         }

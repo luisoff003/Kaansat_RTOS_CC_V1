@@ -152,7 +152,10 @@ int main(void)
     sciReceive(scilinREG, 1, ( unsigned char *)receivedData);
 
     /* Check FSW State */
-    /* --------Read SD card---------- */
+    /* ******************************************************* <--------Read SD card HERE ---------- */
+
+    /* Read states from SD card */
+    FSW_STATE = Cansat_Ready;           /*<-----------------  Change for SD card reading STATE */
 
     CreateUserTasks();
 
