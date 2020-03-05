@@ -58,7 +58,7 @@ float norm( float *q);
 
 float* path_follow(float *in);
 
-float* cross( float *a, float *b);
+void cross( float *a, float *b,float *c);
 
 float dot( float *a, float *b);
 
