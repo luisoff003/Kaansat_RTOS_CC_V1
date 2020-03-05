@@ -32,6 +32,7 @@ C_SRCS += \
 ../source/os_timer.c \
 ../source/param.c \
 ../source/path_follow.c \
+../source/path_manager.c \
 ../source/path_manager_chap10.c \
 ../source/pinmux.c \
 ../source/sci.c \
@@ -63,6 +64,7 @@ C_DEPS += \
 ./source/os_timer.d \
 ./source/param.d \
 ./source/path_follow.d \
+./source/path_manager.d \
 ./source/path_manager_chap10.d \
 ./source/pinmux.d \
 ./source/sci.d \
@@ -96,6 +98,7 @@ OBJS += \
 ./source/os_timer.obj \
 ./source/param.obj \
 ./source/path_follow.obj \
+./source/path_manager.obj \
 ./source/path_manager_chap10.obj \
 ./source/pinmux.obj \
 ./source/sci.obj \
@@ -141,6 +144,7 @@ OBJS__QUOTED += \
 "source\os_timer.obj" \
 "source\param.obj" \
 "source\path_follow.obj" \
+"source\path_manager.obj" \
 "source\path_manager_chap10.obj" \
 "source\pinmux.obj" \
 "source\sci.obj" \
@@ -176,6 +180,7 @@ C_DEPS__QUOTED += \
 "source\os_timer.d" \
 "source\param.d" \
 "source\path_follow.d" \
+"source\path_manager.d" \
 "source\path_manager_chap10.d" \
 "source\pinmux.d" \
 "source\sci.d" \
@@ -215,6 +220,7 @@ C_SRCS__QUOTED += \
 "../source/os_timer.c" \
 "../source/param.c" \
 "../source/path_follow.c" \
+"../source/path_manager.c" \
 "../source/path_manager_chap10.c" \
 "../source/pinmux.c" \
 "../source/sci.c" \
