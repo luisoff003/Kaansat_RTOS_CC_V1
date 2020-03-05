@@ -5,9 +5,6 @@
 SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
-CMD_SRCS += \
-../source/sys_link.cmd 
-
 ASM_SRCS += \
 ../source/dabort.asm \
 ../source/os_portasm.asm \
@@ -21,7 +18,9 @@ C_SRCS += \
 ../source/errata_SSWF021_45.c \
 ../source/esm.c \
 ../source/gio.c \
+../source/guidance_model.c \
 ../source/het.c \
+../source/main.c \
 ../source/notification.c \
 ../source/os_croutine.c \
 ../source/os_event_groups.c \
@@ -32,6 +31,10 @@ C_SRCS += \
 ../source/os_queue.c \
 ../source/os_tasks.c \
 ../source/os_timer.c \
+../source/param.c \
+../source/path_follow.c \
+../source/path_manager.c \
+../source/path_manager_chap10.c \
 ../source/pinmux.c \
 ../source/sci.c \
 ../source/spi.c \
@@ -48,7 +51,9 @@ C_DEPS += \
 ./source/errata_SSWF021_45.d \
 ./source/esm.d \
 ./source/gio.d \
+./source/guidance_model.d \
 ./source/het.d \
+./source/main.d \
 ./source/notification.d \
 ./source/os_croutine.d \
 ./source/os_event_groups.d \
@@ -59,6 +64,10 @@ C_DEPS += \
 ./source/os_queue.d \
 ./source/os_tasks.d \
 ./source/os_timer.d \
+./source/param.d \
+./source/path_follow.d \
+./source/path_manager.d \
+./source/path_manager_chap10.d \
 ./source/pinmux.d \
 ./source/sci.d \
 ./source/spi.d \
@@ -76,7 +85,9 @@ OBJS += \
 ./source/errata_SSWF021_45.obj \
 ./source/esm.obj \
 ./source/gio.obj \
+./source/guidance_model.obj \
 ./source/het.obj \
+./source/main.obj \
 ./source/notification.obj \
 ./source/os_croutine.obj \
 ./source/os_event_groups.obj \
@@ -88,6 +99,10 @@ OBJS += \
 ./source/os_queue.obj \
 ./source/os_tasks.obj \
 ./source/os_timer.obj \
+./source/param.obj \
+./source/path_follow.obj \
+./source/path_manager.obj \
+./source/path_manager_chap10.obj \
 ./source/pinmux.obj \
 ./source/sci.obj \
 ./source/spi.obj \
@@ -117,7 +132,9 @@ OBJS__QUOTED += \
 "source\errata_SSWF021_45.obj" \
 "source\esm.obj" \
 "source\gio.obj" \
+"source\guidance_model.obj" \
 "source\het.obj" \
+"source\main.obj" \
 "source\notification.obj" \
 "source\os_croutine.obj" \
 "source\os_event_groups.obj" \
@@ -129,6 +146,10 @@ OBJS__QUOTED += \
 "source\os_queue.obj" \
 "source\os_tasks.obj" \
 "source\os_timer.obj" \
+"source\param.obj" \
+"source\path_follow.obj" \
+"source\path_manager.obj" \
+"source\path_manager_chap10.obj" \
 "source\pinmux.obj" \
 "source\sci.obj" \
 "source\spi.obj" \
@@ -149,7 +170,9 @@ C_DEPS__QUOTED += \
 "source\errata_SSWF021_45.d" \
 "source\esm.d" \
 "source\gio.d" \
+"source\guidance_model.d" \
 "source\het.d" \
+"source\main.d" \
 "source\notification.d" \
 "source\os_croutine.d" \
 "source\os_event_groups.d" \
@@ -160,6 +183,10 @@ C_DEPS__QUOTED += \
 "source\os_queue.d" \
 "source\os_tasks.d" \
 "source\os_timer.d" \
+"source\param.d" \
+"source\path_follow.d" \
+"source\path_manager.d" \
+"source\path_manager_chap10.d" \
 "source\pinmux.d" \
 "source\sci.d" \
 "source\spi.d" \
@@ -184,7 +211,9 @@ C_SRCS__QUOTED += \
 "../source/errata_SSWF021_45.c" \
 "../source/esm.c" \
 "../source/gio.c" \
+"../source/guidance_model.c" \
 "../source/het.c" \
+"../source/main.c" \
 "../source/notification.c" \
 "../source/os_croutine.c" \
 "../source/os_event_groups.c" \
@@ -195,6 +224,10 @@ C_SRCS__QUOTED += \
 "../source/os_queue.c" \
 "../source/os_tasks.c" \
 "../source/os_timer.c" \
+"../source/param.c" \
+"../source/path_follow.c" \
+"../source/path_manager.c" \
+"../source/path_manager_chap10.c" \
 "../source/pinmux.c" \
 "../source/sci.c" \
 "../source/spi.c" \
