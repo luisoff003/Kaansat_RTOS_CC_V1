@@ -35,7 +35,7 @@
 float* path_follow(float *in)
 {
   unsigned int NN = 0;
-  unsigned int flag = in[1+NN];
+  int flag = in[1+NN];
   int i = 0;
   Va_d      = in[2+NN];
   r_path[0] = in[3+NN];
@@ -75,29 +75,31 @@ float* path_follow(float *in)
           e_p[1] = pe-r_path[1];
           e_p[2] = -h-r_path[2];
           float array[3] = {0,0,1};             //auxiliary array
-          copy_array(cross(q_path, array),&aux);
+          float cruz[3];
+          cross(q_path, array,cruz);
+          //copy_array(cruz,aux);
           for(i=0;i<3;i++){
-            n[i] =  aux[i]/ norm(cross(q_path, array));
+            n[i] =  cruz[i]/ norm(cruz);
           }
           s[0] = e_p[0] - dot(e_p, n)*n[0];
-          s[1] = e_p[2] - dot(e_p, n)*n[3];
-          s[2] = e_p[2] - dot(e_p, n)*n[3];
-          h_c = -r_path[3] - sqrt(pow(s[1],2) + pow(s[2],2)) * q_path[3] / sqrt(pow(q_path[1],2)+pow(q_path[2],2));
-          chi_q = atan2(q_path[2], q_path[1]);
+          s[1] = e_p[1] - dot(e_p, n)*n[1];
+          s[2] = e_p[2] - dot(e_p, n)*n[2];
+          h_c = -r_path[2] - sqrt(pow(s[0],2) + pow(s[1],2)) * q_path[2] / sqrt(pow(q_path[0],2)+pow(q_path[1],2));
+          chi_q = atan2(q_path[1], q_path[0]);
           while(chi_q-chi < -M_PI)
               chi_q = chi_q + 2*M_PI;
           while (chi_q-chi > M_PI)
               chi_q = chi_q - 2*M_PI;
-          e_py = -sin(chi_q)*(pn-r_path[1]) + cos(chi_q)*(pe-r_path[2]);
+          e_py = -sin(chi_q)*(pn-r_path[0]) + cos(chi_q)*(pe-r_path[1]);
 
           chi_c = chi_q - P.chi_inf*2/M_PI*atan(P.k_path*e_py);
 
           phi_ff = 0;
       break;
       case 2: // follow orbit specified by c, rho, lam
-          h_c = -c_orbit[3];
-          d = sqrt(pow((pn-c_orbit[1]),2) + pow((pe-c_orbit[2]),2));
-          barphi = atan2(pe-c_orbit[2], pn-c_orbit[1]);
+          h_c = -c_orbit[2];
+          d = sqrt(pow((pn-c_orbit[0]),2) + pow((pe-c_orbit[1]),2));
+          barphi = atan2(pe-c_orbit[1], pn-c_orbit[0]);
           while(barphi-chi < -M_PI)
             barphi = barphi + 2*M_PI;
           while (barphi-chi > M_PI)
@@ -120,13 +122,11 @@ float* path_follow(float *in)
 
     return(out);
 }
-float* cross( float *a, float *b){
-    float cross_product[3];
-    cross_product[0]=a[1]*b[2]-a[2]*b[1];
-    cross_product[1]=a[2]*b[0]-a[0]*b[2];
-    cross_product[2]=a[0]*b[1]-a[1]*b[0];
+void cross( float *a, float *b,float *c){
+    c[0]=a[1]*b[2]-a[2]*b[1];
+    c[1]=a[2]*b[0]-a[0]*b[2];
+    c[2]=a[0]*b[1]-a[1]*b[0];
 
-    return(cross_product);
 }
 
 float dot( float *a, float *b){
