@@ -47,6 +47,7 @@
 #include "custom/GPS.h"
 #include "custom/ADC_Sensors.h"
 #include "custom/PWM_Sensors.h"
+#include "custom/utm.h"         /*< Convert (Lat,Long) -> (X,Y,Z) */
 
 /* ADC pin declarations
  * NOTE: Use continuous pins [0,1,2], [2,3,4], etc
@@ -61,16 +62,20 @@
 #define PORT_BUZZER         hetPORT1    /*< Buzzer Port */
 
 /* HET pin declarations */
-#define HET_DUST            pwm0           /*< HET00 TMS570LS04 */
-#define HET_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
-#define HET_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
-#define HET_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
+#define pwm_DUST            pwm0           /*< HET00 TMS570LS04 */
+#define pwm_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
+#define pwm_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
+#define pwm_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
 
 /* Servo Position declarations */
 #define SERVO_FREE          500
 #define SERVO_ATACHED       850
 #define SERVO_INITIAL_L     500
 #define SERVO_INITIAL_R     500
+
+/* --------------------- Altitude declarations ----------------------- */
+#define ALT_PAYLO_SEP       400.0f          /*< Separation [m] */
+#define ALT_INITIAL         634.0f          /*< Terrain level [m] Google */
 
 #define COMM_SIZE     255
 
@@ -91,6 +96,7 @@ enum Mission_States{
 extern char command[COMM_SIZE];   /*< Allocates telemetry format to send. */
 extern uint8_t buff_size;   /*< Size of the telemetry string */
 
+/* --------------------- TELEMETRY VARIABLES ------------------------- */
 /* Mission time [s] */
 extern float MISSION_TIME;
 extern char cMISSION_TIME[6];
@@ -147,8 +153,13 @@ extern int dataSPI_ok;
 /* GCS signal is given */
 extern uint8_t START_TELEMETRY;
 
+/* --------------------- OTHER VARIABLES ------------------------- */
 /* Historical Altitude */
-extern int h_Altitude[10];
+extern float h_Altitude[10];
+extern float dt_Altitude;
+
+/* Maximum Altitude */
+extern float max_Altitude;
 
 /* -------------------------------------------------------------------
  *  FUNCTIONS

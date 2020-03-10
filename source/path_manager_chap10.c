@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include "param.h"
 #include "path_manager.h"
+#include "custom/Estimate_States.h"
 
 float* path_manager(float *in){
     int i = 0;

@@ -40,6 +40,12 @@ extern hetSIGNAL_t pwm2_het4_SERVO_L;
 extern hetSIGNAL_t pwm3_het6_SERVO_R;
 
 /* pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY); */
-void   pwmEnableNotification(hetBASE_t * hetREG,uint32 pwm, uint32 notification);
+//void   pwmEnableNotification(hetBASE_t * hetREG,uint32 pwm, uint32 notification);
+
+/* Set pwm for Dust Sensor */
+uint8_t DustSensor_Init(hetRAMBASE_t * hetRAM,hetBASE_t * hetREG,uint32 pwm, uint32 notification);
+
+/* Turn off Dust Sensor */
+uint8_t DustSensor_Off(hetRAMBASE_t * hetRAM,hetBASE_t * hetREG,uint32 pwm, uint32 notification);
 
 #endif /* INCLUDE_CUSTOM_PWM_SENSORS_H_ */

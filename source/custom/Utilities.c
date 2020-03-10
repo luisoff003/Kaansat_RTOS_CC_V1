@@ -32,6 +32,7 @@
 char command[COMM_SIZE] = {};   /*< Allocates telemetry format to send. */
 uint8_t buff_size = 0;   /*< Size of the telemetry string */
 
+/* --------------------- TELEMETRY VARIABLES ------------------------- */
 /* Mission time [s] */
 float MISSION_TIME = 0.0;
 char cMISSION_TIME[6];
@@ -87,9 +88,13 @@ int dataSPI_ok = 0;     /*<This variable avoids RTOS crashes */
 /* GCS signal is given */
 uint8_t START_TELEMETRY = 0;
 
+/* --------------------- OTHER VARIABLES ------------------------- */
 /* Historical Altitude */
-int h_Altitude[10] = {};
+float h_Altitude[10] = {};
+float dt_Altitude;
 
+/* Maximum Altitude */
+extern float max_Altitude = 0.0;
 /* -------------------------------------------------------------------
  *  FUNCTIONS
  * ------------------------------------------------------------------- */

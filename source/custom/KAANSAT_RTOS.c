@@ -65,9 +65,9 @@ void vTask_WAIT2START(void *pcParameters){
             }
 
             /* Update Mission State */
-            FSW_STATE = Telemetry_started;
+            FSW_STATE = Telemetry_started;      /* IMPORTANT:       Save on SD CARD */
 
-            /* Delete WAIT2START task */
+            /* Suicide, world is a bad place :( */
             vTaskDelete( xHandle_WAIT2START );
         }
         else{}
@@ -105,6 +105,7 @@ portTickType xLastWakeTime;
 
             case Rocket_Apogee:
                 /* Max altitude */
+                /* Nothing to do here */
                 break;
 
             case Cansat_Separation:
@@ -141,12 +142,26 @@ portTickType xLastWakeTimeSensors;
     /* Start count on actual Tick */
     xLastWakeTimeSensors = xTaskGetTickCount();
 
+    int i = 0;
     /* Infinite Loop */
     for(;;){
         /* ---------------- SPI ------------------- */
+        /* Historical altitude */
+        for( i=1; i<10; i++ ){
+            h_Altitude[i] = h_Altitude[i-1];
+        }
+        h_Altitude[0] = ALTITUDE_BAR - ALT_INITIAL;
+
         /* Read Pressure/Temperature BMP280 */
 
         /* Altitude Derivative Dh */
+        dt_Altitude = ( h_Altitude[0] - h_Altitude[9] ) / ( T_SENSORS*0.01f );      /* [m] */
+
+        /* Maximum Altitude */
+        if( max_Altitude > ALTITUDE_BAR ){
+            max_Altitude = ALTITUDE_BAR;        /*< Update Maximum Altitude [m] */
+        }
+        else{}
 
         /* --------------- ADC ------------------- */
         if( Read_All_ADC(adcREG1, adcGROUP1, &ADC_0_7) == 0){
@@ -159,11 +174,11 @@ portTickType xLastWakeTimeSensors;
 
         /* Euler Angles Calculation */
 
-        /* Euler Angle Velocities */
+        /* Euler Angle Derivatives */
 
 
-        /* Sensors every 100ms */
-        vTaskDelayUntil( &xLastWakeTimeSensors, T_SENSORS/ portTICK_RATE_MS  );
+        /* Sensors every 10ms */
+        vTaskDelayUntil( &xLastWakeTimeSensors, T_SENSORS/ portTICK_RATE_MS );
     }
 }
 
@@ -205,6 +220,8 @@ portTickType xLastWakeTimeSatOps;
     for(;;){
         /* Rocket Take-Off Condition */
         if( 0 ){
+            /* Means is getting higher
+             * Dh > 0 */
             /* Change to Rocket_TakeOff State */
             FSW_STATE = Rocket_TakeOff;
         }
@@ -212,6 +229,8 @@ portTickType xLastWakeTimeSatOps;
 
         /* Release Payload Condition State */
         if( 0 ){
+            /* Cansat is outside the rocket */
+
             /* Change to Cansat_Separation State */
             FSW_STATE = Cansat_Separation;
         }
@@ -220,6 +239,10 @@ portTickType xLastWakeTimeSatOps;
         /* Payload Release Condition */
         if( 0 ){
             FSW_STATE = Payload_Realese;
+            /* Autopilot/Camera Control on Running State */
+            if( xTaskCreate(vTask_CONTROL, "CONTROL", configMINIMAL_STACK_SIZE, NULL, AUTOPILOT_PRIOR, &xHandle_CONTROL) != pdTRUE ){
+                while(1);   /* Error */
+            }
         }
         else {}
 
@@ -263,32 +286,26 @@ portTickType xLastWakeTime;
     for(;;){
         for(i=0; i<3U; i++){
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
-            /* Se duerme 400 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);   /* Sleep 400 ms */
 
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
-            /* Se duerme 400 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);   /* Sleep 400 ms */
         }
 
         for(i=0; i<3U; i++){
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
-            /* Se duerme 1000 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);    /*< Sleep 1000 ms */
 
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
-            /* Se duerme 400 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_LONG_BUZZER/portTICK_RATE_MS);    /*< Sleep 400 ms */
         }
 
         for(i=0; i<3U; i++){
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 1);      /*< OFF */
-            /* Se duerme 400 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);   /*< Sleep 400 ms */
 
             gioSetBit(PORT_BUZZER, GIO_BUZZER, 0);      /*< ON */
-            /* Se duerme 400 ms */
-            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);
+            vTaskDelayUntil(&xLastWakeTime, T_SHORT_BUZZER/portTICK_RATE_MS);   /*< Sleep 400 ms */
         }
 
     }
@@ -315,10 +332,7 @@ uint8_t TelemetryStarted_CreateState(void){
         while(1);   /* Error */
     }
     /* Set pwm for Dust Sensor */
-    pwm0_het0_DUST.duty = 320;
-    pwm0_het0_DUST.period = 10000;
-    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
-    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
+    DustSensor_Init(hetRAM1, hetREG1, pwm_DUST, pwmEND_OF_DUTY);
 
     return 0;
 }
@@ -336,10 +350,7 @@ uint8_t RocketTakeOff_CreateState(void){
         while(1);   /* Error */
     }
     /* Set pwm for Dust Sensor */
-    pwm0_het0_DUST.duty = 320;
-    pwm0_het0_DUST.period = 10000;
-    pwmSetSignal10e3(hetRAM1, pwm0, pwm0_het0_DUST);
-    pwmEnableNotification(hetREG1, pwm0, pwmEND_OF_DUTY);
+    DustSensor_Init(hetRAM1, hetREG1, pwm_DUST, pwmEND_OF_DUTY);
 
     return 0;
 }
@@ -357,6 +368,8 @@ uint8_t CansatSeparation_CreateState(void){
     if( xTaskCreate(vTask_SAT_OPS, "MISSION OPS", configMINIMAL_STACK_SIZE, NULL, MISSION_PRIOR, &xHandle_SAT_OPS) != pdTRUE ){
         while(1);   /* Error */
     }
+    /* Set pwm for Dust Sensor */
+    DustSensor_Init(hetRAM1, hetREG1, pwm_DUST, pwmEND_OF_DUTY);
 
     return 0;
 }
@@ -378,16 +391,26 @@ uint8_t PayloadRealese_CreateState(void){
     if( xTaskCreate(vTask_CONTROL, "CONTROL", configMINIMAL_STACK_SIZE, NULL, AUTOPILOT_PRIOR, &xHandle_CONTROL) != pdTRUE ){
         while(1);   /* Error */
     }
+    /* Set pwm for Dust Sensor */
+    DustSensor_Init(hetRAM1, hetREG1, pwm_DUST, pwmEND_OF_DUTY);
+
     return 0;
 }
 
 uint8_t Landing_CreateState(void){
-    /* Delete other tasks */
-    vTaskDelete( xHandle_SENSORS );
-    vTaskDelete( xHandle_CONTROL );
-    vTaskDelete( xHandle_TELEMETRY );
 
+    /* Delete other tasks */
+    if( eTaskGetState( xHandle_SENSORS ) != eDeleted ){
+        vTaskDelete( xHandle_SENSORS );
+    }
+    if( eTaskGetState( xHandle_CONTROL ) != eDeleted ){
+        vTaskDelete( xHandle_CONTROL );
+    }
+    if( eTaskGetState( xHandle_TELEMETRY ) != eDeleted ){
+        vTaskDelete( xHandle_TELEMETRY );
+    }
     /* Turn off all sensors */
+    DustSensor_Off(hetRAM1, hetREG1, pwm_DUST, pwmEND_OF_DUTY);
 
     /* Buzzer */
     if( xTaskCreate(vTask_BUZZER, "BUZZER", configMINIMAL_STACK_SIZE, NULL, BUZZER_PRIOR, &xHandle_BUZZER) != pdTRUE ){
@@ -398,5 +421,5 @@ uint8_t Landing_CreateState(void){
 
 /*< Inactivity task service */
 void vApplicationIdleHook(void){
-    /* Nothing to see here */
+    /* Nothing to do here */
 }

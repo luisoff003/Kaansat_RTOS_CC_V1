@@ -14,21 +14,23 @@
 #include "math.h"
 #include "stdint.h"
 
+#include "custom/Estimate_States.h"
+
   float Va_d;
   float r_path[3];
   float q_path[3];
   float c_orbit[3];
   float rho_orbit;
   float lam_orbit;
-  float pn;
-  float pe;
+//  float pn;       /* Se definio en Estimate States */
+//  float pe;       /* Se definio en Estimate States */
   float h;
-  float Va;
+//  float Va;       /* Se definio en Estimate States */
   //float alpha;
   //float beta;
   float phi;
   float theta;
-  float chi;
+//  float chi;    /* Se definio en Estimate States */
   //float p;
   //float q;
   //float r2;

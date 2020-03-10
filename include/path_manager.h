@@ -21,7 +21,7 @@ unsigned int NN;
 float pn;
 float pe;
 float h;
-float Va;
+//float Va;         /* Se definio en Estimate States */
 //float alpha;
 //float beta;
 //float phi;

@@ -5,6 +5,9 @@
 SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
+CMD_SRCS += \
+../source/sys_link.cmd 
+
 ASM_SRCS += \
 ../source/dabort.asm \
 ../source/os_portasm.asm \
@@ -20,7 +23,6 @@ C_SRCS += \
 ../source/gio.c \
 ../source/guidance_model.c \
 ../source/het.c \
-../source/main.c \
 ../source/notification.c \
 ../source/os_croutine.c \
 ../source/os_event_groups.c \
@@ -52,7 +54,6 @@ C_DEPS += \
 ./source/gio.d \
 ./source/guidance_model.d \
 ./source/het.d \
-./source/main.d \
 ./source/notification.d \
 ./source/os_croutine.d \
 ./source/os_event_groups.d \
@@ -85,7 +86,6 @@ OBJS += \
 ./source/gio.obj \
 ./source/guidance_model.obj \
 ./source/het.obj \
-./source/main.obj \
 ./source/notification.obj \
 ./source/os_croutine.obj \
 ./source/os_event_groups.obj \
@@ -131,7 +131,6 @@ OBJS__QUOTED += \
 "source\gio.obj" \
 "source\guidance_model.obj" \
 "source\het.obj" \
-"source\main.obj" \
 "source\notification.obj" \
 "source\os_croutine.obj" \
 "source\os_event_groups.obj" \
@@ -168,7 +167,6 @@ C_DEPS__QUOTED += \
 "source\gio.d" \
 "source\guidance_model.d" \
 "source\het.d" \
-"source\main.d" \
 "source\notification.d" \
 "source\os_croutine.d" \
 "source\os_event_groups.d" \
@@ -208,7 +206,6 @@ C_SRCS__QUOTED += \
 "../source/gio.c" \
 "../source/guidance_model.c" \
 "../source/het.c" \
-"../source/main.c" \
 "../source/notification.c" \
 "../source/os_croutine.c" \
 "../source/os_event_groups.c" \
