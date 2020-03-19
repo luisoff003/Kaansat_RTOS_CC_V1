@@ -37,6 +37,9 @@
 /* Other Libraries */
 #include "custom/Utilities.h"
 
+/* Euler Angles/Quaternion Library */
+#include "custom/Euler_QuaternionMadwick.h"
+
 #define g_accel   9.80665       /* Gravity acceleration value */
 
 
@@ -59,14 +62,14 @@ typedef struct{
     float we;
 }Wind_t;
 
-/* Estimates States X */
-extern float X_pn;
-extern float X_pe;
-extern float Vg;
+///* Estimates States X */
+//extern float X_pn;
+//extern float X_pe;
+//extern float Vg;
 extern float chi;
-extern float wn;
-extern float we;
-extern float psi;
+//extern float wn;
+//extern float we;
+//extern float psi;
 
 extern float Va;
 
@@ -92,8 +95,7 @@ int Fx_GPS( void );
 int Update_Jacobian_Fx_GPS( void );
 
 /* Continuous-discrete Extended Kalman Filter */
-int Discrete_Extended_KalmanFilter(float T_out, int N, matrix_float *Xhat, matrix_float Fx, matrix_float JFx,
-                          matrix_float Jhx, matrix_float *P, matrix_float Q, matrix_float R);
+int Discrete_Extended_KalmanFilter(float T_out, int N, matrix_float *Xhat, matrix_float Fx, matrix_float JFx, matrix_float Jhx, matrix_float *P, matrix_float Q, matrix_float R);
 
 /* Low Pass Filter */
 float LPF(float old, float u, float alpha);

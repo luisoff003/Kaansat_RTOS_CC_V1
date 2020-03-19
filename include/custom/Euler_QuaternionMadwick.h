@@ -34,12 +34,9 @@ extern volatile float q0, q1, q2, q3;   // quaternion of sensor frame relative t
 
 float invSampleFreq;
 float roll, pitch, yaw;
-char anglesComputed;
 
-void Mahony(void);
 static float invSqrt(float x);
-void computeAngles(void);
-void begin(float sampleFrequency);
+int computeAngles(void);
 void MahonyAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
 void MahonyAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
 float getRoll(void);

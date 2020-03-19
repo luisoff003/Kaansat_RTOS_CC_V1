@@ -43,8 +43,6 @@
  */
 #define p0_def              101325
 #define Tr_def              0.0065
-#define R_def               8.3
-#define M_def               0.02894
 #define g_def               9.80665
 #define T0_def              288.15
 #define f_Pascales_def      101325

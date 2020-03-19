@@ -37,13 +37,13 @@ static matrix_float JH_matrix;
 static float JH_data[6*7];      /*6x7*/
 
 /* Estimates States X */
-float X_pn = 0.0;       /*< North Position */
-float X_pe = 0.0;       /*< East Position */
-float Vg = 0.0;         /*< Ground Speed */
+static float X_pn = 0.0;       /*< North Position */
+static float X_pe = 0.0;       /*< East Position */
+static float Vg = 0.0;         /*< Ground Speed */
 float chi = 0.0;        /*< Course angle */
-float wn = 0.0;         /*< Wind speed north */
-float we = 0.0;         /*< Wind speed east */
-float psi = 0.0;        /*< Yaw angle */
+static float wn = 0.0;         /*< Wind speed north */
+static float we = 0.0;         /*< Wind speed east */
+static float psi = 0.0;        /*< Yaw angle */
 
 float Va = 0.0;
 
@@ -133,8 +133,8 @@ float LPF(float old, float u, float alpha){
 }
 
 /* Continuous-discrete Extended Kalman Filter */
-int Discrete_Extended_KalmanFilter(float T_out, int N, matrix_float *Xhat, matrix_float Fx, matrix_float JFx,
-                          matrix_float Jhx, matrix_float *P, matrix_float Q, matrix_float R){
+int Discrete_Extended_KalmanFilter( float T_out, int N, matrix_float *Xhat, matrix_float Fx,
+                                   matrix_float JFx, matrix_float Jhx, matrix_float *P, matrix_float Q, matrix_float R_matrix ){
     int i = 0, j = 0;
     /* Initialize Identity Matrix */
     matrix_float I_matrix;
@@ -157,7 +157,9 @@ int Discrete_Extended_KalmanFilter(float T_out, int N, matrix_float *Xhat, matri
     /* ------------ Prediction Step ------------ */
     for( i = 0; i<N; i++ ){
         /* ------------ Xhat = Xhat + (T_out/N)Fx ------------ */
+        Update_Jacobian_Fx_GPS();
         matrix_float_times( &Fx, (float)(T_out/N) );    /* (T_out/N)*Fx */
+        Update_Jacobian_Hx_GPS();
         matrix_float_add( Xhat, &Fx );                  /* Xhat + (T_out/N)*Fx */
 
         /* ------------ P = P + (T_out/N)(AP + PA^T + Q) ------------ */
@@ -181,7 +183,7 @@ int Discrete_Extended_KalmanFilter(float T_out, int N, matrix_float *Xhat, matri
                 /* ------------ Ci = dhi/dx(x,u) ------------ */
                 matrix_float_set( &Ci, 1, j, matrix_float_get(&Jhx, i, j));
                 /* ------------ Ri ------------ */
-                matrix_float_set( &Ri, 1, j, matrix_float_get(&R, i, j));
+                matrix_float_set( &Ri, 1, j, matrix_float_get(&R_matrix, i, j));
             }
             /* ------------ Li = PCi^T ( Ri + CiPCi^T )^-1 ------------ */
             matrix_float_mul( &Ci, P, &Ans_matrix_1);                  /* CiP */

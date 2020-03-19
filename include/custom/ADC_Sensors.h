@@ -28,6 +28,15 @@
 
 #include "Utilities.h"
 
+#define L0_def      -0.0065         /* [K/m] Rate of temperature decrease in lower atmosphere*/
+#define T0_def      288.15          /* [K] Standard temperature at sea level */
+#define M_def       0.0289644       /* [kg/mol] Standard molar mass of atmospheric air */
+#define R_def       8.31432         /*[Nm/(mol-k)] Universal gas constant for air */
+#define P0_def      101325          /* [N/m^2] Standard pressure at sea level*/
+
+#define MAX_PRES    101.325     /* [kPa] Maximum pressure of sensor */
+#define const_rho   1.22        /* [kg/m^3] Air density */
+
 typedef struct{
     int id[8];
     int ADC_conv[8];
@@ -41,5 +50,7 @@ static int i_j;
 
 uint8_t Read_All_ADC(adcBASE_t *adc,uint32 group, ADC_channel *ADC_data);
 int Get_ADC_Value(int ID);
+
+float Get_Airspeed(int ADC);
 
 #endif /* INCLUDE_CUSTOM_ADC_SENSORS_H_ */

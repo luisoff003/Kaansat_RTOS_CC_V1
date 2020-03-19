@@ -59,22 +59,22 @@ void MahonyAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az
     float halfex, halfey, halfez;
     float qa, qb, qc;
 
-    // Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
+    // Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalization)
     if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
         MahonyAHRSupdateIMU(gx, gy, gz, ax, ay, az);
         return;
     }
 
-    // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+    // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalization)
     if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-        // Normalise accelerometer measurement
+        // Normalize accelerometer measurement
         recipNorm = invSqrt(ax * ax + ay * ay + az * az);
         ax *= recipNorm;
         ay *= recipNorm;
         az *= recipNorm;
 
-        // Normalise magnetometer measurement
+        // Normalize magnetometer measurement
         recipNorm = invSqrt(mx * mx + my * my + mz * mz);
         mx *= recipNorm;
         my *= recipNorm;
@@ -144,7 +144,7 @@ void MahonyAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az
     q2 += (qa * gy - qb * gz + q3 * gx);
     q3 += (qa * gz + qb * gy - qc * gx);
 
-    // Normalise quaternion
+    // Normalize quaternion
     recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
     q0 *= recipNorm;
     q1 *= recipNorm;
@@ -164,7 +164,7 @@ void MahonyAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float
     // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
     if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-        // Normalise accelerometer measurement
+        // Normalize accelerometer measurement
         recipNorm = invSqrt(ax * ax + ay * ay + az * az);
         ax *= recipNorm;
         ay *= recipNorm;
@@ -213,7 +213,7 @@ void MahonyAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float
     q2 += (qa * gy - qb * gz + q3 * gx);
     q3 += (qa * gz + qb * gy - qc * gx);
 
-    // Normalise quaternion
+    // Normalize quaternion
     recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
     q0 *= recipNorm;
     q1 *= recipNorm;
@@ -235,9 +235,9 @@ float invSqrt(float x) {
     return y;
 }
 
-void computeAngles(void){
+int computeAngles(void){
     roll = atan2f(q0*q1 + q2*q3, 0.5f - q1*q1 - q2*q2);
     pitch = asinf(-2.0f * (q1*q3 - q0*q2));
     yaw = atan2f(q1*q2 + q0*q3, 0.5f - q2*q2 - q3*q3);
-    anglesComputed = 1;
+    return 0;
 }

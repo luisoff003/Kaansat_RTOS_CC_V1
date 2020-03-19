@@ -59,6 +59,21 @@ uint8_t Read_All_ADC(adcBASE_t *adc,uint32 group, ADC_channel *ADC_data){
     return 0;
 }
 
-int Get_ADC_Value(int ID){
+int Get_ADC_Value( int ID ){
     return ADC_0_7.ADC_conv[ID];
+}
+
+/*
+ *  P = P0*pow((T0/(T0+L0*h_ASL)),g*M/(R*L0))
+ *  L0 = -0.0065 K/m            Rate of temperature decrease in lower atmosphere
+ *  T0 = 288.15 K               Standard temperature at sea level
+ *  M = 0.0289644 kg/mol        Standard molar mass of atmospheric air
+ *  R = 8.31432 Nm/(mol-k)      Universal gas constant for air
+ *  P0 = 101325 N/m^2           Standard pressure at sea level
+ *  rho = (M*P)/(R*T)           Air density
+ *  y_diffpres = (rho*Va^2)/2
+ */
+float Get_Airspeed(int ADC_diffpres){
+    float DiffPresPa = (MAX_PRES/2.32f)*((float)(ADC_diffpres*(3.3/4096) ) - 4.96) + MAX_PRES;     /* [Pa] */
+    return sqrt(2*DiffPresPa/const_rho);
 }

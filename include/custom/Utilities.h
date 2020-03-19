@@ -52,20 +52,20 @@
 /* ADC pin declarations
  * NOTE: Use continuous pins [0,1,2], [2,3,4], etc
  * Using separated pins will produce fatal errors. */
-#define AD_VOLT_BAT         0           /*< ADIN0 TMS570LS04 */
+#define AD_VOLT_BAT         2           /*< ADIN2 TMS570LS04 */
 #define AD_PITOT            1           /*< ADIN1 TMS570LS04 */
-#define AD_DUST             2           /*< ADIN2 TMS570LS04 */
+#define AD_DUST             0           /*< ADIN0 TMS570LS04 */
 
 /* GIO pin declarations */
 #define GIO_ON_OFFLED       0           /*< GIOA0 TMS570LS04 */
-#define GIO_BUZZER          4           /*< GIOA1 TMS570LS04 */
+#define GIO_BUZZER          2           /*< HET02 TMS570LS04 */
 #define PORT_BUZZER         hetPORT1    /*< Buzzer Port */
 
 /* HET pin declarations */
 #define pwm_DUST            pwm0           /*< HET00 TMS570LS04 */
-#define pwm_SERVO_LIB       pwm1           /*< HET02 TMS570LS04 */
-#define pwm_SERVOCTRL_L     pwm2           /*< HET04 TMS570LS04 */
-#define pwm_SERVOCTRL_R     pwm3           /*< HET06 TMS570LS04 */
+#define pwm_SERVO_LIB       pwm1           /*< HET04 TMS570LS04 */
+#define pwm_SERVOCTRL_L     pwm2           /*< HET06 TMS570LS04 */
+#define pwm_SERVOCTRL_R     pwm3           /*< HET10 TMS570LS04 */
 
 /* Servo Position declarations */
 #define SERVO_FREE          500
